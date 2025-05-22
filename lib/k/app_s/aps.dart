@@ -183,7 +183,7 @@ class Aps {
   // 更新主题颜色
   Future<void> updateThemeColor(Color color) async {
     themeColor.value = color;
-    await AppDatabase().themeSettings.updateThemeColor(color.toARGB32());
+    await AppDatabase().themeSettings.updateThemeColor(color.value);
   }
 
   /// **********************************************************************************************************
