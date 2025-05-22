@@ -9,7 +9,7 @@ class ThemeSettings {
   Id id = 1;
 
   /// 主题颜色值，默认为蓝色
-  int colorValue = Colors.blue.toARGB32();
+  int colorValue = Colors.blue.value;
 
   /// 主题模式枚举值，默认跟随系统
   @enumerated
