@@ -31,6 +31,12 @@ set(CMAKE_CXX_FLAGS_PROFILE "${CMAKE_CXX_FLAGS_RELEASE}")
 
 # Use Unicode for all projects.
 add_definitions(-DUNICODE -D_UNICODE)
+# 强制目标 Windows 最低版本为 Windows 7
+add_definitions(-D_WIN32_WINNT=0x0601)
+add_definitions(-DNTDDI_VERSION=0x06010000)
+
+# 设置链接器使用 Windows 7 的子系统版本
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS,6.1")
 
 # Compilation settings that should be applied to most targets.
 #
@@ -43,6 +49,14 @@ function(APPLY_STANDARD_SETTINGS TARGET)
   target_compile_options(${TARGET} PRIVATE /EHsc)
   target_compile_definitions(${TARGET} PRIVATE "_HAS_EXCEPTIONS=0")
   target_compile_definitions(${TARGET} PRIVATE "$<$<CONFIG:Debug>:_DEBUG>")
+  # 禁用异常
+  target_compile_definitions(${TARGET} PRIVATE "_HAS_EXCEPTIONS=0")
+   # 添加 Windows 7 兼容性宏定义
+  target_compile_definitions(${TARGET} PRIVATE -D_WIN32_WINNT=0x0601)
+  target_compile_definitions(${TARGET} PRIVATE -DNTDDI_VERSION=0x06010000)
+
+  # 添加链接器标志，指定 subsystem 为 Windows 7
+  target_link_options(${TARGET} PRIVATE "/SUBSYSTEM:WINDOWS,6.1")
 endfunction()
 
 # Flutter library and tool build rules.
