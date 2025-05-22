@@ -35,9 +35,6 @@ add_definitions(-DUNICODE -D_UNICODE)
 add_definitions(-D_WIN32_WINNT=0x0601)
 add_definitions(-DNTDDI_VERSION=0x06010000)
 
-# 设置链接器使用 Windows 7 的子系统版本
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS,6.1")
-
 # Compilation settings that should be applied to most targets.
 #
 # Be cautious about adding new options here, as plugins use this function by
@@ -49,6 +46,9 @@ function(APPLY_STANDARD_SETTINGS TARGET)
   target_compile_options(${TARGET} PRIVATE /EHsc)
   target_compile_definitions(${TARGET} PRIVATE "_HAS_EXCEPTIONS=0")
   target_compile_definitions(${TARGET} PRIVATE "$<$<CONFIG:Debug>:_DEBUG>")
+  # 添加 Windows 7 兼容性宏定义
+  target_compile_definitions(${TARGET} PRIVATE -D_WIN32_WINNT=0x0601)
+  target_compile_definitions(${TARGET} PRIVATE -DNTDDI_VERSION=0x06010000)
 endfunction()
 
 # Flutter library and tool build rules.
