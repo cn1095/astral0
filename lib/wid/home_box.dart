@@ -54,8 +54,8 @@ class _HomeBoxState extends State<HomeBox> {
         ),
         child: InkWell(
           onTap: () {},
-          splashColor: theme.colorScheme.primary.withValues(alpha: 0.3),
-          highlightColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+          splashColor: theme.colorScheme.primary.withOpacity(0.3),
+          highlightColor: theme.colorScheme.primary.withOpacity(0.1), 
           borderRadius: BorderRadius.circular(8),
           child: Container(
             padding: EdgeInsets.all(widget.isBorder ?? true ? 12 : 1.0),
