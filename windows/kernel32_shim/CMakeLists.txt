@@ -15,6 +15,11 @@ set_target_properties(kernel32 PROPERTIES                   # 中文：设置 ta
     LINK_FLAGS "/DEF:${CMAKE_CURRENT_SOURCE_DIR}/exports.def"  # 中文：传给链接器的 DEF
 )
 
+# 显式链接系统 kernel32.lib，解析其余所有导入符号
+target_link_libraries(kernel32 PRIVATE
+    kernel32   # 中文：链接系统 kernel32.lib
+)
+
 # 设置输出目录到 Flutter Runner 可执行文件所在目录，确保 Loader 优先加载
 set_target_properties(kernel32 PROPERTIES                   # 中文：再次设置 target 属性
     RUNTIME_OUTPUT_DIRECTORY_DEBUG   "${CMAKE_SOURCE_DIR}/../runner/Debug"   # 中文：Debug 输出
