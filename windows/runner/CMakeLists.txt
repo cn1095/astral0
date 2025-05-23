@@ -24,7 +24,7 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_BUILD=${FLUTT
 
 # 设置链接器参数，指定清单和子系统，兼容Windows 7
 SET_TARGET_PROPERTIES(${BINARY_NAME} PROPERTIES 
-  LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartupForYY_Thunks"
+  LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS"
 )
 
 # 禁用Windows宏NOMINMAX，防止和C++标准库冲突
