@@ -8,9 +8,9 @@ add_library(kernel32_shim SHARED                                       # 中文�
     exports.def                                                        # 中文：导出定义
 )
 
-# 2. 指定输出文件名为 kernel32.dll，这样生成的文件才叫 kernel32.dll
+# 2. 指定输出文件名为 api-ms-win-core-synch-l1-2-0.dll，这样生成的文件才叫 api-ms-win-core-synch-l1-2-0.dll
 set_target_properties(kernel32_shim PROPERTIES
-    OUTPUT_NAME "kernel32"                                             # 中文：输出文件名（去掉后缀）设为 kernel32
+    OUTPUT_NAME "api-ms-win-core-synch-l1-2-0"                                             # 中文：输出文件名（去掉后缀）设为 api-ms-win-core-synch-l1-2-0
 )
 
 # 3. 告诉链接器使用 DEF 文件
@@ -20,7 +20,7 @@ set_target_properties(kernel32_shim PROPERTIES
 
 # 4. 显式链接系统的 kernel32.lib，解析所有其他导入符号
 target_link_libraries(kernel32_shim PRIVATE
-    "kernel32.lib"                                                     # 中文：链接系统的 kernel32 库
+    "api-ms-win-core-synch-l1-2-0.dll"                                                     # 中文：链接系统的 api-ms-win-core-synch-l1-2-0.dll 库
 )
 
 # 5. 设置输出目录到 Flutter Runner 的 bin 目录
