@@ -18,11 +18,6 @@ set_target_properties(kernel32_shim PROPERTIES
     LINK_FLAGS "/DEF:${CMAKE_CURRENT_SOURCE_DIR}/exports.def"          # 中文：传 DEF 给链接器
 )
 
-# 4. 显式链接系统的 kernel32.lib，解析所有其他导入符号
-target_link_libraries(kernel32_shim PRIVATE
-    "kernel32.lib"                                                     # 中文：链接系统的 kernel32.lib 库
-)
-
 # 5. 设置输出目录到 Flutter Runner 的 bin 目录
 set_target_properties(kernel32_shim PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY_DEBUG   "${CMAKE_SOURCE_DIR}/../runner/Debug"    # 中文：Debug 输出位置
