@@ -10,8 +10,6 @@ add_executable(${BINARY_NAME} WIN32
   "${FLUTTER_MANAGED_DIR}/generated_plugin_registrant.cc"
   "Runner.rc"
   "runner.exe.manifest"
-  # 添加 YY-Thunks 的 obj 文件，路径请根据实际位置调整
-  "${CMAKE_CURRENT_SOURCE_DIR}/YY_Thunks_for_Win7.obj"
 )
 
 # 应用标准构建设置（可以根据需求移除）
@@ -34,6 +32,11 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 
 # 设置目标最低支持系统版本为Windows 7（0x0601）
 target_compile_definitions(${BINARY_NAME} PRIVATE "_WIN32_WINNT=0x0601")
+
+# ✅ 先链接 YY_Thunks_for_Win7.obj（兼容 Win7 API）
+target_link_libraries(${BINARY_NAME} PRIVATE 
+  "${CMAKE_CURRENT_SOURCE_DIR}/YY_Thunks_for_Win7.obj"
+)
 
 # 链接Flutter库和应用特定库
 target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
