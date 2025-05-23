@@ -6,7 +6,10 @@
 // extern "C" void __stdcall WaitOnAddress(void*, void*, SIZE_T, DWORD);
 // extern "C" void __stdcall WakeByAddressSingle(void*);
 // extern "C" void __stdcall WakeByAddressAll(void*);
-
+// 中文：导出 Sleep 函数，模拟 Windows 的 Sleep
+extern "C" __declspec(dllexport) void __stdcall Sleep(DWORD dwMilliseconds) {
+    ::Sleep(dwMilliseconds);  // 中文：调用系统真实的 Sleep 函数
+}
 BOOL APIENTRY DllMain(               // 中文：DLL 主入口函数
     HMODULE hModule,                 // 中文：模块句柄
     DWORD  ul_reason_for_call,       // 中文：调用原因
