@@ -9,14 +9,13 @@ set(PROJECT_NAME "rust_lib_astral")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 include("../cargokit/cmake/cargokit.cmake")
-apply_cargokit(${PROJECT_NAME} ../../../../../../rust rust_lib_astral "")
+apply_cargokit(${PROJECT_NAME} ../../../../../../rust rust_lib_astral "" GENERATED_TARGET)
 # === 添加 YY-Thunks 模拟 API 支持 ===
 # 注意：路径要根据实际位置修改
 set(YY_THUNKS_OBJ "${CMAKE_CURRENT_SOURCE_DIR}/../../windows/YY_Thunks_for_Win7.obj")
 
 # 添加到 Rust 生成的库链接中
-# ${PROJECT_NAME}_cargokit_target 是 cargokit 自动生成的目标名
-target_link_libraries(${PROJECT_NAME}_cargokit_target PRIVATE ${YY_THUNKS_OBJ})
+target_link_libraries(${GENERATED_TARGET} PRIVATE ${YY_THUNKS_OBJ})
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
