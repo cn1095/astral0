@@ -7,4 +7,4 @@ EXPORTS                              ; 中文：开始导出符号列表
     WaitOnAddress           @1       ; 中文：覆盖 WaitOnAddress，使用 Thunks 实现
     WakeByAddressSingle     @2       ; 中文：覆盖 WakeByAddressSingle，使用 Thunks 实现
     WakeByAddressAll        @3       ; 中文：覆盖 WakeByAddressAll，使用 Thunks 实现
-    Sleep                   @4       ; 中文：添加 Sleep 函数导出，使用 Thunks 实现
+    Sleep                   @17       ; 中文：添加 Sleep 函数导出，使用 Thunks 实现
