@@ -1,11 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(runner LANGUAGES CXX)
 
-# Define the application target. To change its name, change BINARY_NAME in the
-# top-level CMakeLists.txt, not the value here, or `flutter run` will no longer
-# work.
-#
-# Any new source files that you add to the application should be added here.
+# 定义应用程序目标。要更改名称，请在顶层CMakeLists.txt中修改BINARY_NAME。
 add_executable(${BINARY_NAME} WIN32
   "flutter_window.cpp"
   "main.cpp"
@@ -16,24 +12,34 @@ add_executable(${BINARY_NAME} WIN32
   "runner.exe.manifest"
 )
 
-# Apply the standard set of build settings. This can be removed for applications
-# that need different build settings.
+# 应用标准构建设置（可以根据需求移除）
 apply_standard_settings(${BINARY_NAME})
 
-# Add preprocessor definitions for the build version.
+# 定义编译宏，传递 Flutter 版本信息
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION=\"${FLUTTER_VERSION}\"")
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_MAJOR=${FLUTTER_VERSION_MAJOR}")
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_MINOR=${FLUTTER_VERSION_MINOR}")
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_PATCH=${FLUTTER_VERSION_PATCH}")
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_BUILD=${FLUTTER_VERSION_BUILD}")
-SET_TARGET_PROPERTIES(${BINARY_NAME} PROPERTIES LINK_FLAGS    "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS")
-# Disable Windows macros that collide with C++ standard library functions.
+
+# 禁用Windows宏NOMINMAX，防止和C++标准库冲突
 target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 
-# Add dependency libraries and include directories. Add any application-specific
-# dependencies here.
+# 设置目标最低支持系统版本为Windows 7（0x0601）
+target_compile_definitions(${BINARY_NAME} PRIVATE "_WIN32_WINNT=0x0601")
+
+set(YY_THUNKS_OBJ_PATH "${CMAKE_CURRENT_SOURCE_DIR}/YY_Thunks_for_Win7.obj")
+target_sources(${BINARY_NAME} PRIVATE "${YY_THUNKS_OBJ_PATH}")
+
+# 设置入口点为mainCRTStartupForYY_Thunks，子系统为Windows GUI
+set_target_properties(${BINARY_NAME} PROPERTIES
+  LINK_FLAGS "/ENTRY:mainCRTStartupForYY_Thunks /SUBSYSTEM:WINDOWS /MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\""
+)
+
+# 链接Flutter库和应用特定库
 target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
-# 添加资源复制指令到可执行目标所在目录
+
+# 复制dlls目录下的DLL文件到输出目录
 add_custom_command(TARGET ${BINARY_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_CURRENT_SOURCE_DIR}/../../dlls"
@@ -41,8 +47,12 @@ add_custom_command(TARGET ${BINARY_NAME} POST_BUILD
   COMMENT "Copying DLL files to output directory"
   VERBATIM
 )
+
+# 链接额外Windows系统库
 target_link_libraries(${BINARY_NAME} PRIVATE "dwmapi.lib")
+
+# 添加头文件目录
 target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
 
-# Run the Flutter tool portions of the build. This must not be removed.
+# Flutter工具的构建依赖
 add_dependencies(${BINARY_NAME} flutter_assemble)
