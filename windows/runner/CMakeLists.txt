@@ -33,7 +33,7 @@ target_sources(${BINARY_NAME} PRIVATE "${YY_THUNKS_OBJ_PATH}")
 
 # 设置入口点为mainCRTStartupForYY_Thunks，子系统为Windows GUI
 set_target_properties(${BINARY_NAME} PROPERTIES
-  LINK_FLAGS "/ENTRY:mainCRTStartupForYY_Thunks /SUBSYSTEM:WINDOWS /MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\""
+  LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:WINDOWS"
 )
 
 # 链接Flutter库和应用特定库
