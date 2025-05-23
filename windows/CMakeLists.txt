@@ -44,7 +44,6 @@ function(APPLY_STANDARD_SETTINGS TARGET)
   target_compile_definitions(${TARGET}
     PRIVATE "_HAS_EXCEPTIONS=0"
     PRIVATE "$<$<CONFIG:Debug>:_DEBUG>"
-    PRIVATE "_WIN32_WINNT=0x0601"        # 强制使用 Win7 API 版本
   )
 endfunction()
 
