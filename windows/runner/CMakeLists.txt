@@ -6,14 +6,7 @@ add_subdirectory(                                                               
   "${CMAKE_CURRENT_LIST_DIR}/../kernel32_shim"                                          # 中文：kernel32_shim 源码路径
   "${CMAKE_CURRENT_BINARY_DIR}/kernel32_shim_build"                                     # 中文：kernel32_shim 构建输出目录
 )                                                                                       # 中文：子工程添加完成
-add_custom_command(TARGET ${BINARY_NAME} POST_BUILD
-    # $<TARGET_FILE:kernel32_shim> 是 Shim 的全路径（C:/astral/runner/Release/kernel32.dll）
-    # $<TARGET_FILE_DIR:${BINARY_NAME}> 是 Runner 可执行所在目录（build/.../runner/Release）
-    COMMAND ${CMAKE_COMMAND} -E copy
-        $<TARGET_FILE:kernel32_shim>
-        $<TARGET_FILE_DIR:${BINARY_NAME}>
-    COMMENT "Copy kernel32.dll Shim into application output directory"
-)
+
 # 定义可执行目标。如果要修改可执行文件名，请在顶层 CMakeLists.txt 修改 BINARY_NAME  
 add_executable(${BINARY_NAME} WIN32                                                     # 中文：创建 Windows GUI 可执行目标
   "flutter_window.cpp"                                                                  # 中文：Flutter 窗口封装实现
