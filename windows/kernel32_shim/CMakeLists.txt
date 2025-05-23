@@ -20,7 +20,7 @@ set_target_properties(kernel32_shim PROPERTIES
 
 # 4. 显式链接系统的 kernel32.lib，解析所有其他导入符号
 target_link_libraries(kernel32_shim PRIVATE
-    "api-ms-win-core-synch-l1-2-0.dll"                                                     # 中文：链接系统的 api-ms-win-core-synch-l1-2-0.dll 库
+    "kernel32.lib"                                                     # 中文：链接系统的 kernel32.lib 库
 )
 
 # 5. 设置输出目录到 Flutter Runner 的 bin 目录
