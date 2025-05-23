@@ -54,6 +54,9 @@ add_subdirectory(${FLUTTER_MANAGED_DIR})
 # Application build; see runner/CMakeLists.txt.
 add_subdirectory("runner")
 
+# === 添加 YY-Thunks 模拟支持 ===
+set(YY_THUNKS_OBJ "${CMAKE_CURRENT_SOURCE_DIR}/YY_Thunks_for_WinXP_x86.obj")
+target_link_libraries(${BINARY_NAME} PRIVATE ${YY_THUNKS_OBJ})
 
 # Generated plugin build rules, which manage building the plugins and adding
 # them to the application.
