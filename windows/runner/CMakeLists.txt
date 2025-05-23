@@ -46,3 +46,13 @@ target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
 
 # Run the Flutter tool portions of the build. This must not be removed.
 add_dependencies(${BINARY_NAME} flutter_assemble)
+# === 添加 Windows 7 模拟 API 支持 ===
+# 设置 thunk 模拟对象和源文件的路径
+set(YY_THUNKS_OBJ "${CMAKE_CURRENT_LIST_DIR}/../YY_Thunks_for_Win7.obj")        # thunk 对象文件在 windows/ 目录
+set(THUNKS_WRAPPER "${CMAKE_CURRENT_LIST_DIR}/../thunks_wrapper.cpp")           # wrapper 源码也在 windows/
+
+# 添加 wrapper 源文件（用于模拟 WaitOnAddress 等 API）
+target_sources(${BINARY_NAME} PRIVATE ${THUNKS_WRAPPER})
+
+# 链接 thunk 模拟对象（将 WaitOnAddress 等函数导出）
+target_link_libraries(${BINARY_NAME} PRIVATE ${YY_THUNKS_OBJ})
