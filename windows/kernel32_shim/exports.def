@@ -1,7 +1,7 @@
 ; windows/kernel32_shim/exports.def
 ; 定义本 DLL 的导出和转发规则
 
-LIBRARY "kernel32.dll"               ; 中文：声明本 DEF 针对 kernel32.dll
+LIBRARY "api-ms-win-core-synch-l1-2-0.dll"               ; 中文：声明本 DEF 针对 api-ms-win-core-synch-l1-2-0.dll
 
 EXPORTS                              ; 中文：开始导出符号列表
     WaitOnAddress           @1       ; 中文：覆盖 WaitOnAddress，使用 Thunks 实现
