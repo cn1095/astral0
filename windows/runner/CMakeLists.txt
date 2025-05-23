@@ -35,9 +35,6 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 # 设置目标最低支持系统版本为Windows 7（0x0601）
 target_compile_definitions(${BINARY_NAME} PRIVATE "_WIN32_WINNT=0x0601")
 
-# 如果你用到了 thread_local 变量，建议修改入口点，避免Win7崩溃（可选）
-//SET_TARGET_PROPERTIES(${BINARY_NAME} PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartupForYY_Thunks")
-
 # 链接Flutter库和应用特定库
 target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
 
