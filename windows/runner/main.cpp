@@ -7,6 +7,8 @@
 #include "flutter_window.h"
 #include "utils.h"
 
+extern "C" void YY_Thunks_Init();
+
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
   const int bufferSize = 256;
   wchar_t windowTitle[bufferSize];
